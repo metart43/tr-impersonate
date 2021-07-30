@@ -21,6 +21,33 @@ body {
   margin: 1rem 0;
 }
 
+
+.breadcrum-wrapper {
+  display: flex;
+}
+#breadcrum > a {
+  color: gray;
+  text-decoration: none;
+}
+
+#breadcrum > a:hover {
+  color: black;
+  cursor: pointer;
+}
+
+#breadcrum:before {
+  content: '/';
+  margin-right: 8px;
+  color: lightgray;
+}
+
+#breadcrum:not(:first-of-type) {
+  margin-left: 8px;
+  color: lightgray;
+  content: ' ';
+}
+
+
 .table-wrapper{
   padding: 32px;
   background-color: #f5f5f5;

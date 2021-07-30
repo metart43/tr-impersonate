@@ -50,14 +50,13 @@ const impersonate = async (user) => {
 
 (async () => {
   const {users, orgName} = await listUsers();
-  console.log('Users', users);
-  console.log('Org Name', orgName);
+  const tableHeader = document.getElementById("table-header");
+  tableHeader.innerText = `User List For ${orgName}`;
   const usersTable = document.getElementById("users-table");
    if (users && users.length) {
     populateUsersTable(users);
   }
 
-  console.log(usersTable);
 })().catch(err => {
   console.error(err);
 });
@@ -67,21 +66,32 @@ const populateUsersTable = (userArray) => {
   userArray.map(user => {
     const userName = user.firstName + " " + user.lastName;
     const userRow = document.createElement("tr");
+    const userSaveCell = document.createElement("td");
+    const saveUserButton = document.createElement("button");
+    saveUserButton.data = { id: user._id, orgId: user.orgId };
+    saveUserButton.addEventListener("click", (event) => {
+      saveUser(event);
+    });
+    saveUserButton.innerText = "Save User";
+    userSaveCell.appendChild(saveUserButton)
     userRow.id = user._id;
     userRow.innerHTML = `
       <td>${userName}</td>
       <td>${user.email}</td>
-      <td>
-        <button class="">
-          Save User
-        </button>
-      </td>
     `;
+    userRow.appendChild(userSaveCell);
     usersTableBody.appendChild(userRow);
   })
 }
 
-
+const saveUser = (event) => {
+  console.log(event.target.data); 
+  // let savedUsersArray = chrome.storage.sync.get("savedUsers");
+  // console.log(savedUsersArray)
+  // savedUsersArray.push(user);
+  // chrome.storage.sync.set({ savedUsers: savedUsersArray });
+  // console.log(chrome.storage.sync.get({ savedUsers: usersArray }));
+}
 
 
 
