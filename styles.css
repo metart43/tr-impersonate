@@ -25,23 +25,23 @@ body {
 .breadcrum-wrapper {
   display: flex;
 }
-#breadcrum > a {
+.breadcrum > a {
   color: gray;
   text-decoration: none;
 }
 
-#breadcrum > a:hover {
+.breadcrum > a:hover {
   color: black;
   cursor: pointer;
 }
 
-#breadcrum:before {
+.breadcrum:before {
   content: '/';
   margin-right: 8px;
   color: lightgray;
 }
 
-#breadcrum:not(:first-of-type) {
+.breadcrum:not(:first-of-type) {
   margin-left: 8px;
   color: lightgray;
   content: ' ';
@@ -73,4 +73,8 @@ th {
 td {
   padding: var(--table-cell-padding);
   border-bottom: var(--table-border);
+}
+
+#saved-users-table {
+  display: none;
 }

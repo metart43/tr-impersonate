@@ -7,8 +7,8 @@
     <h1 class="app-title">Impersonate Triblio User</h1>
     <div class="wrapper">
     <nav class="breadcrum-wrapper">
-      <div id="breadcrum"><a>User List</a></div>
-      <div id="breadcrum"><a>Saved Users</a></div>
+      <div class="breadcrum"><a id="breadcrum-user-list">User List</a></div>
+      <div class="breadcrum"><a id="breadcrum-user-saved-list">Saved Users</a></div>
      </nav> 
       <input id="search" placeholder="Search for a user" />
       <div class="table-wrapper">
@@ -21,6 +21,21 @@
             <tr>
               <th>User Name</th> 
               <th>Email</th> 
+              <th>Action</th>  
+            </tr>
+          </tbody>
+        </table>
+        <table id="saved-users-table">
+          <thead>
+            <th id="saved-table-header" colspan="4">
+              Saved Users
+            </th>
+          </thead>
+          <tbody>
+            <tr>
+              <th>User Name</th> 
+              <th>Email</th> 
+              <th>Org</th> 
               <th>Action</th>  
             </tr>
           </tbody>
