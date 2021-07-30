@@ -1,3 +1,7 @@
+/**
+ * Returns an object containing array of users and org name
+ * @return {Object} {users: String[], orgName: String}
+ */
 const listUsers = async () => {
   try {
     const usersResponse = await fetch('http://localhost:3000/api/users', {
@@ -19,6 +23,10 @@ const listUsers = async () => {
   };
 }
 
+/**
+ * Impersonates the current session to the user and reloads the tab
+ * @param  {Object} user Object containing {userId: String, orgId: String}
+ */
 const impersonate = async (user) => {
   try {
     const impersonateResponse = await fetch('http://localhost:3000/api/user/impersonate', {
