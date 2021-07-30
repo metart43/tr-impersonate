@@ -70,6 +70,14 @@ const setSavedUsers = async (savedUsers) => {
   }
 }
 
+const removeSavedUser = async (user) => {
+  const savedUsers = await getSavedUsers();
+  const newSavedUsers = savedUsers.filter((element) => {
+    return element.userId != user.userId;
+  });
+  await setSavedUsers(newSavedUsers);
+}
+
 (async () => {
   const {users, orgName} = await listUsers();
   const savedUsers = await getSavedUsers();
