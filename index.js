@@ -28,10 +28,7 @@ const impersonate = async (user) => {
       headers: {
         'content-type': 'application/json;charset=UTF-8'
       },
-      body: JSON.stringify({
-        orgId: user.orgId,
-        userId: user.id
-      })
+      body: JSON.stringify(user)
     });
     if (impersonateResponse.status !== 200) {
       throw new Error('Non 200 response status');
