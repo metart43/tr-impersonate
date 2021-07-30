@@ -128,7 +128,7 @@ const populateUsersTable = async (userArray, orgName) => {
       let savedUsers = await getSavedUsers();
       console.log('New saved users', savedUsers);
     });
-    saveUserButton.innerText = "Save User";
+    saveUserButton.innerText = "Save";
     userSaveCell.appendChild(saveUserButton);
     userRow.id = user._id;
     userRow.innerHTML = `
@@ -175,8 +175,8 @@ const populateSavedUsersTable = (savedUserArray) => {
       const savedUsers = await getSavedUsers();
       populateSavedUsersTable(savedUsers);
     });
-    impersonateUserButton.innerText = "Impersonate User";
-    removeSavedUserButton.innerText = "Remove User";
+    impersonateUserButton.innerText = "Impersonate";
+    removeSavedUserButton.innerText = "Remove";
     userCell.appendChild(impersonateUserButton);
     userCell2.appendChild(removeSavedUserButton);
     userRow.id = user._id;
