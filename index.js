@@ -52,7 +52,7 @@ const getSavedUsers = async () => {
   return new Promise(function(result, reject) {
     try {
       chrome.storage.sync.get('savedUsers', function(ret) {
-        result(ret.savedUsers);
+        result(ret.savedUsers || []);
       });
     }
     catch(err) {
