@@ -28,9 +28,36 @@ const listUsers = async () => {
   const users = await listUsers();
   console.log('Users', users);
   const usersTable = document.getElementById("users-table");
-  // chrome.extension.getBackgroundPage().console.log('foo', usersTable);
+   if (users && users.length) {
+    populateUsersTable(users);
+  }
 
   console.log(usersTable);
 })().catch(err => {
   console.error(err);
 });
+const usersTableBody = document.getElementById("users-table").getElementsByTagName('tbody')[0];
+
+const populateUsersTable = (userArray) => {
+  userArray.map(user => {
+    const userName = user.firstName + " " + user.lastName;
+    const userRow = document.createElement("tr");
+    userRow.id = user._id;
+    userRow.innerHTML = `
+      <td>${userName}</td>
+      <td>${user.email}</td>
+      <td>
+        <button class="">
+          Save User
+        </button>
+      </td>
+    `;
+    usersTableBody.appendChild(userRow);
+  })
+}
+
+
+
+
+
+
