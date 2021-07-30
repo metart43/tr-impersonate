@@ -119,7 +119,7 @@ const populateUsersTable = async (userArray, orgName) => {
     const userRow = document.createElement("tr");
     const userSaveCell = document.createElement("td");
     const saveUserButton = document.createElement("button");
-    saveUserButton.data = { userId: user._id, orgId: user.orgId, orgName, name: userName, email: user.email, isAdmin: user.isOrgAdmin};
+    saveUserButton.data = { userId: user._id, orgId: user.orgId, orgName, name: userName, email: user.email, isAdmin: !!(user.isOrgAdmin)};
     saveUserButton.addEventListener("click", async (event) => {
       await saveUser(event);
       let savedUsers = await getSavedUsers();
