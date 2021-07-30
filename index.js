@@ -1,6 +1,6 @@
 /**
  * Returns an object containing array of users and org name
- * @return {Object} {users: String[], orgName: String}
+ * @return {Object} {users: Object[], orgName: String}
  */
 const listUsers = async () => {
   try {
