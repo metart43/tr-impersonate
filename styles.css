@@ -1,0 +1,10 @@
+body {
+  width: 600px;
+}
+
+
+.wrapper {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+}
