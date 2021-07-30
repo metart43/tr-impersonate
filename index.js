@@ -89,7 +89,7 @@ const removeSavedUser = async (user) => {
   tableHeader.innerText = `User List For ${orgName}`;
   populateSavedUsersTable(savedUsers);
    if (users && users.length) {
-    await populateUsersTable(users);
+    await populateUsersTable(users, orgName);
   }
 
 })().catch(err => {
