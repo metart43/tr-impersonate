@@ -1,3 +1,13 @@
+const usersTableBody = document.getElementById("users-table").getElementsByTagName('tbody')[0];
+const savedUsersTableBody = document.getElementById("saved-users-table").getElementsByTagName('tbody')[0];
+const userListTag = document.getElementById("breadcrum-user-list");
+const userSavedListTag = document.getElementById("breadcrum-user-saved-list");
+const usersTable = document.getElementById("users-table");
+const savedUserTable = document.getElementById("saved-users-table");
+const searchBox = document.getElementById('search');
+
+let currentTable = 'SavedUsers';
+
 /**
  * Returns an object containing array of users and org name
  * @return {Object} {users: Object[], orgName: String}
@@ -21,8 +31,8 @@ const listUsers = async (search) => {
   catch(err) {
     console.log('Error loading users', err);
     return { users: [], orgName: '' };
-  };
-}
+  }
+};
 
 /**
  * Impersonates the current session to the user and reloads the tab
@@ -48,8 +58,8 @@ const impersonate = async (event) => {
   }
   catch(err) {
     console.log('Error impersonating user', user, err);
-  };
-}
+  }
+};
 
 const getSavedUsers = async (search) => {
   return new Promise(function(result, reject) {
@@ -62,7 +72,7 @@ const getSavedUsers = async (search) => {
       reject(err);
     }
   });
-}
+};
 
 const filterUserArray = (users, search) => {
   if (!search) return users;
@@ -76,7 +86,7 @@ const filterUserArray = (users, search) => {
     }
   });
   return ret;
-}
+};
 
 const setSavedUsers = async (savedUsers) => {
   try {
@@ -85,7 +95,7 @@ const setSavedUsers = async (savedUsers) => {
   catch(err) {
     console.log(err);
   }
-}
+};
 
 const removeSavedUser = async (event) => {
   const user = event.target.data;
@@ -97,21 +107,11 @@ const removeSavedUser = async (event) => {
 }
 
 (async () => {
-  const {users, orgName} = await listUsers();
   const savedUsers = await getSavedUsers();
-  console.log('SAVED USERS', savedUsers);
-  const tableHeader = document.getElementById("table-header");
-  tableHeader.innerText = `User List For ${orgName}`;
   populateSavedUsersTable(savedUsers);
-   if (users && users.length) {
-    await populateUsersTable(users, orgName);
-  }
-
 })().catch(err => {
   console.error(err);
 });
-const usersTableBody = document.getElementById("users-table").getElementsByTagName('tbody')[0];
-const savedUsersTableBody = document.getElementById("saved-users-table").getElementsByTagName('tbody')[0]
 
 const populateUsersTable = async (userArray, orgName) => {
   while (usersTableBody.firstChild) {
@@ -191,22 +191,12 @@ const populateSavedUsersTable = (savedUserArray) => {
   })
 }
 
-const userListTag = document.getElementById("breadcrum-user-list");
-const userSavedListTag = document.getElementById("breadcrum-user-saved-list");
-const usersTable = document.getElementById("users-table");
-const savedUserTable = document.getElementById("saved-users-table");
-const searchBox = document.getElementById('search');
-
-let currentTable = 'SavedUsers';
-
 searchBox.addEventListener('input', async (event) => {
   if (currentTable === 'UserList') {
     const {users, orgName} = await listUsers(searchBox.value);
     const tableHeader = document.getElementById("table-header");
     tableHeader.innerText = `User List For ${orgName}`;
-    if (users && users.length) {
-      await populateUsersTable(users, orgName);
-    }
+    await populateUsersTable(users, orgName);
   }
   else {
     const savedUsers = await getSavedUsers(searchBox.value);
@@ -217,7 +207,7 @@ searchBox.addEventListener('input', async (event) => {
 userSavedListTag.addEventListener("click", async () => {
   const savedUsers = await getSavedUsers();
   populateSavedUsersTable(savedUsers);
-  searchBox.value = ''
+  searchBox.value = '';
   currentTable = 'SavedUsers';
   usersTable.style.display = "none";
   savedUserTable.style.display = "revert";
@@ -231,9 +221,7 @@ userListTag.addEventListener("click", async () => {
   const {users, orgName} = await listUsers();
   const tableHeader = document.getElementById("table-header");
   tableHeader.innerText = `User List For ${orgName}`;
-  if (users && users.length) {
-    await populateUsersTable(users, orgName);
-  }
+  await populateUsersTable(users, orgName);
   searchBox.value = ''
   currentTable = 'UserList';
   usersTable.style.display = "revert";

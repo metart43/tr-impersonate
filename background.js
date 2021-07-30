@@ -66,7 +66,7 @@ const demoUsersArray = [
     "deletedAt": null,
     "isStaffAdmin": false
   }
-]
+];
 
 // chrome.runtime.onInstalled.addListener(() => {
 //   let savedUsersArray = [];
