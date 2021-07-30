@@ -2,7 +2,7 @@
  * Returns an object containing array of users and org name
  * @return {Object} {users: Object[], orgName: String}
  */
-const listUsers = async () => {
+const listUsers = async (search) => {
   try {
     const usersResponse = await fetch('http://localhost:3000/api/users', {
       method: 'GET',
@@ -16,7 +16,7 @@ const listUsers = async () => {
       mode: 'cors',
     });
     const org = await orgResponse.json();
-    return {users, orgName: org.name};
+    return {users: filterUserArray(users || [], search), orgName: org.name};
   }
   catch(err) {
     console.log('Error loading users', err);
@@ -194,8 +194,28 @@ const userListTag = document.getElementById("breadcrum-user-list");
 const userSavedListTag = document.getElementById("breadcrum-user-saved-list");
 const usersTable = document.getElementById("users-table");
 const savedUserTable = document.getElementById("saved-users-table");
+const searchBox = document.getElementById('search');
+
+let currentTable = 'SavedUsers';
+
+searchBox.addEventListener('input', async (event) => {
+  if (currentTable === 'UserList') {
+    const {users, orgName} = await listUsers(searchBox.value);
+    const tableHeader = document.getElementById("table-header");
+    tableHeader.innerText = `User List For ${orgName}`;
+    if (users && users.length) {
+      await populateUsersTable(users, orgName);
+    }
+  }
+  else {
+    const savedUsers = await getSavedUsers(searchBox.value);
+    populateSavedUsersTable(savedUsers);
+  }
+});
 
 userSavedListTag.addEventListener("click", async () => {
+  searchBox.value = ''
+  currentTable = 'SavedUsers';
   usersTable.style.display = "none";
   savedUserTable.style.display = "revert";
   const savedUsers = await getSavedUsers();
@@ -203,6 +223,8 @@ userSavedListTag.addEventListener("click", async () => {
 });
 
 userListTag.addEventListener("click", async () => {
+  searchBox.value = ''
+  currentTable = 'UserList';
   usersTable.style.display = "revert";
   savedUserTable.style.display = "none";
   const {users, orgName} = await listUsers();
