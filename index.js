@@ -48,13 +48,37 @@ const impersonate = async (user) => {
   };
 }
 
+const getSavedUsers = async () => {
+  return new Promise(function(result, reject) {
+    try {
+      chrome.storage.sync.get('savedUsers', function(ret) {
+        result(ret.savedUsers);
+      });
+    }
+    catch(err) {
+      reject(err);
+    }
+  });
+}
+
+const setSavedUsers = async (savedUsers) => {
+  try {
+    await chrome.storage.sync.set({'savedUsers': savedUsers});
+  }
+  catch(err) {
+    console.log(err);
+  }
+}
+
 (async () => {
   const {users, orgName} = await listUsers();
+  const savedUsers = await getSavedUsers();
+  console.log('SAVED USERS', savedUsers);
   const tableHeader = document.getElementById("table-header");
   tableHeader.innerText = `User List For ${orgName}`;
   const usersTable = document.getElementById("users-table");
    if (users && users.length) {
-    populateUsersTable(users);
+    await populateUsersTable(users);
   }
 
 })().catch(err => {
@@ -62,15 +86,17 @@ const impersonate = async (user) => {
 });
 const usersTableBody = document.getElementById("users-table").getElementsByTagName('tbody')[0];
 
-const populateUsersTable = (userArray) => {
+const populateUsersTable = async (userArray, orgName) => {
   userArray.map(user => {
     const userName = user.firstName + " " + user.lastName;
     const userRow = document.createElement("tr");
     const userSaveCell = document.createElement("td");
     const saveUserButton = document.createElement("button");
-    saveUserButton.data = { id: user._id, orgId: user.orgId };
-    saveUserButton.addEventListener("click", (event) => {
-      saveUser(event);
+    saveUserButton.data = { userId: user._id, orgId: user.orgId, orgName, name: userName, email: user.email};
+    saveUserButton.addEventListener("click", async (event) => {
+      await saveUser(event);
+      let savedUsers = await getSavedUsers();
+      console.log('New saved users', savedUsers);
     });
     saveUserButton.innerText = "Save User";
     userSaveCell.appendChild(saveUserButton)
@@ -84,13 +110,10 @@ const populateUsersTable = (userArray) => {
   })
 }
 
-const saveUser = (event) => {
-  console.log(event.target.data); 
-  // let savedUsersArray = chrome.storage.sync.get("savedUsers");
-  // console.log(savedUsersArray)
-  // savedUsersArray.push(user);
-  // chrome.storage.sync.set({ savedUsers: savedUsersArray });
-  // console.log(chrome.storage.sync.get({ savedUsers: usersArray }));
+const saveUser = async (event) => {
+  const savedUsers = await getSavedUsers();
+  savedUsers.push(event.target.data);
+  await setSavedUsers(savedUsers);
 }
 
 

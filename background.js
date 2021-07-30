@@ -68,13 +68,13 @@ const demoUsersArray = [
   }
 ]
 
-chrome.runtime.onInstalled.addListener(() => {
-  let savedUsersArray = [];
-  chrome.storage.sync.get([SAVED_USERS], function(result) {
-    console.log('Value currently is ' + result[SAVED_USERS], result);
-    if (result && result.length) savedUsersArray = result[SAVED_USERS]
-  });
-  chrome.storage.sync.set({ SAVED_USERS: savedUsersArray }, function() {
-    console.log('Value is set to ' + savedUsersArray);
-  });
-});
+// chrome.runtime.onInstalled.addListener(() => {
+//   let savedUsersArray = [];
+//   chrome.storage.sync.get([SAVED_USERS], function(result) {
+//     console.log('Value currently is ' + result[SAVED_USERS], result);
+//     if (result && result.length) savedUsersArray = result[SAVED_USERS]
+//   });
+//   chrome.storage.sync.set({ SAVED_USERS: savedUsersArray }, function() {
+//     console.log('Value is set to ' + savedUsersArray);
+//   });
+// });
