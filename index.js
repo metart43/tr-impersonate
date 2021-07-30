@@ -166,8 +166,9 @@ const populateSavedUsersTable = (savedUserArray) => {
     const removeSavedUserButton = document.createElement("button");
     impersonateUserButton.data = { userId: user.userId, orgId: user.orgId };
     removeSavedUserButton.data = { userId: user.userId, orgId: user.orgId };
-    impersonateUserButton.addEventListener("click", (event) => {
-      impersonate(event);
+    impersonateUserButton.addEventListener("click", async (event) => {
+      await impersonate(event);
+      window.close();
     });
     removeSavedUserButton.addEventListener("click", async (event) => {
       await removeSavedUser(event);
