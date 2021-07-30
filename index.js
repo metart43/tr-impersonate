@@ -12,12 +12,7 @@ const listUsers = async () => {
       mode: 'cors',
     });
     const org = await orgResponse.json();
-    if (org && org.name && users && users.length) {
-      users.forEach(function(user) {
-        user.orgName = org.name;
-      });
-    }
-    return users;
+    return {users, orgName: org.name};
   }
   catch(err) {
     console.log('Error loading users', err);
@@ -25,8 +20,9 @@ const listUsers = async () => {
 }
 
 (async () => {
-  const users = await listUsers();
+  const {users, orgName} = await listUsers();
   console.log('Users', users);
+  console.log('Org Name', orgName);
   const usersTable = document.getElementById("users-table");
    if (users && users.length) {
     populateUsersTable(users);
