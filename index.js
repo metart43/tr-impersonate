@@ -139,8 +139,15 @@ const populateUsersTable = async (userArray, orgName) => {
 
 const saveUser = async (event) => {
   const savedUsers = await getSavedUsers();
-  savedUsers.push(event.target.data);
-  await setSavedUsers(savedUsers);
+  let shouldAddUser = true;
+  savedUsers.forEach(function(user) {
+    if (user.userId === event.target.data.userId) shouldAddUser = false;
+  });
+  if (shouldAddUser) {
+    savedUsers.push(event.target.data);
+    await setSavedUsers(savedUsers);
+  }
+  else console.log('user already saved');
 }
 
 const populateSavedUsersTable = (savedUserArray) => {
