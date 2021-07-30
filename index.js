@@ -29,7 +29,7 @@ const listUsers = async () => {
  * @param  {Object} user Object containing {userId: String, orgId: String}
  */
 const impersonate = async (event) => {
-  const user = event.target.data
+  const user = event.target.data;
   console.log(user);
   try {
     const impersonateResponse = await fetch('http://localhost:3000/api/user/impersonate', {
@@ -73,7 +73,8 @@ const setSavedUsers = async (savedUsers) => {
   }
 }
 
-const removeSavedUser = async (user) => {
+const removeSavedUser = async (event) => {
+  const user = event.target.data;
   const savedUsers = await getSavedUsers();
   const newSavedUsers = savedUsers.filter((element) => {
     return element.userId != user.userId;
@@ -111,7 +112,7 @@ const populateUsersTable = async (userArray, orgName) => {
       console.log('New saved users', savedUsers);
     });
     saveUserButton.innerText = "Save User";
-    userSaveCell.appendChild(saveUserButton)
+    userSaveCell.appendChild(saveUserButton);
     userRow.id = user._id;
     userRow.innerHTML = `
       <td>${userName}</td>
@@ -132,13 +133,22 @@ const populateSavedUsersTable = (savedUserArray) => {
   savedUserArray.map(user => {
     const userRow = document.createElement("tr");
     const userCell = document.createElement("td");
+    const userCell2 = document.createElement("td");
+    
     const impersonateUserButton = document.createElement("button");
+    const removeSavedUserButton = document.createElement("button");
     impersonateUserButton.data = { userId: user.userId, orgId: user.orgId };
+    removeSavedUserButton.data = { userId: user.userId, orgId: user.orgId };
     impersonateUserButton.addEventListener("click", (event) => {
       impersonate(event);
     });
+    removeSavedUserButton.addEventListener("click", (event) => {
+      removeSavedUser(event);
+    });
     impersonateUserButton.innerText = "Impersonate User";
-    userCell.appendChild(impersonateUserButton)
+    removeSavedUserButton.innerText = "Remove User";
+    userCell.appendChild(impersonateUserButton);
+    userCell2.appendChild(removeSavedUserButton);
     userRow.id = user._id;
     userRow.innerHTML = `
       <td>${user.name}</td>
@@ -146,6 +156,7 @@ const populateSavedUsersTable = (savedUserArray) => {
       <td>${user.orgName}</td>
     `;
     userRow.appendChild(userCell);
+    userRow.appendChild(userCell2);
     savedUsersTableBody.appendChild(userRow);
   })
 }
