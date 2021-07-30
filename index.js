@@ -215,23 +215,31 @@ searchBox.addEventListener('input', async (event) => {
 });
 
 userSavedListTag.addEventListener("click", async () => {
+  const savedUsers = await getSavedUsers();
+  populateSavedUsersTable(savedUsers);
   searchBox.value = ''
   currentTable = 'SavedUsers';
   usersTable.style.display = "none";
   savedUserTable.style.display = "revert";
-  const savedUsers = await getSavedUsers();
-  populateSavedUsersTable(savedUsers);
+  userSavedListTag.style.color = "black"
+  userSavedListTag.style.fontWeight = "bold";
+  userListTag.style.color = "revert"
+  userListTag.style.fontWeight = "revert";
 });
 
 userListTag.addEventListener("click", async () => {
-  searchBox.value = ''
-  currentTable = 'UserList';
-  usersTable.style.display = "revert";
-  savedUserTable.style.display = "none";
   const {users, orgName} = await listUsers();
   const tableHeader = document.getElementById("table-header");
   tableHeader.innerText = `User List For ${orgName}`;
   if (users && users.length) {
     await populateUsersTable(users, orgName);
   }
+  searchBox.value = ''
+  currentTable = 'UserList';
+  usersTable.style.display = "revert";
+  savedUserTable.style.display = "none";
+  userListTag.style.color = "black"
+  userListTag.style.fontWeight = "bold";
+  userSavedListTag.style.color = "revert"
+  userSavedListTag.style.fontWeight = "revert";
 });
