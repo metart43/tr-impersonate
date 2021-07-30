@@ -51,17 +51,31 @@ const impersonate = async (event) => {
   };
 }
 
-const getSavedUsers = async () => {
+const getSavedUsers = async (search) => {
   return new Promise(function(result, reject) {
     try {
       chrome.storage.sync.get('savedUsers', function(ret) {
-        result(ret.savedUsers || []);
+        result(filterUserArray(ret.savedUsers || [], search));
       });
     }
     catch(err) {
       reject(err);
     }
   });
+}
+
+const filterUserArray = (users, search) => {
+  if (!search) return users;
+  const ret = [];
+  users.forEach((user) => {
+    if (user && (
+       (user.name && user.name.toLowerCase().includes(search.toLowerCase())) ||
+        user.orgName && user.orgName.toLowerCase().includes(search.toLowerCase()) ||
+        user.email && user.email.toLowerCase().includes(search.toLowerCase()))) {
+      ret.push(user);
+    }
+  });
+  return ret;
 }
 
 const setSavedUsers = async (savedUsers) => {
