@@ -114,6 +114,9 @@ const usersTableBody = document.getElementById("users-table").getElementsByTagNa
 const savedUsersTableBody = document.getElementById("saved-users-table").getElementsByTagName('tbody')[0]
 
 const populateUsersTable = async (userArray, orgName) => {
+  while (usersTableBody.firstChild) {
+    usersTableBody.removeChild(usersTableBody.firstChild);
+  }
   userArray.map(user => {
     const userName = user.firstName + " " + user.lastName;
     const userRow = document.createElement("tr");
@@ -151,6 +154,9 @@ const saveUser = async (event) => {
 }
 
 const populateSavedUsersTable = (savedUserArray) => {
+  while (savedUsersTableBody.firstChild) {
+    savedUsersTableBody.removeChild(savedUsersTableBody.firstChild);
+  }
   savedUserArray.map(user => {
     const userRow = document.createElement("tr");
     const userCell = document.createElement("td");
@@ -163,8 +169,10 @@ const populateSavedUsersTable = (savedUserArray) => {
     impersonateUserButton.addEventListener("click", (event) => {
       impersonate(event);
     });
-    removeSavedUserButton.addEventListener("click", (event) => {
-      removeSavedUser(event);
+    removeSavedUserButton.addEventListener("click", async (event) => {
+      await removeSavedUser(event);
+      const savedUsers = await getSavedUsers();
+      populateSavedUsersTable(savedUsers);
     });
     impersonateUserButton.innerText = "Impersonate User";
     removeSavedUserButton.innerText = "Remove User";
@@ -187,12 +195,20 @@ const userSavedListTag = document.getElementById("breadcrum-user-saved-list");
 const usersTable = document.getElementById("users-table");
 const savedUserTable = document.getElementById("saved-users-table");
 
-userSavedListTag.addEventListener("click", () => {
+userSavedListTag.addEventListener("click", async () => {
   usersTable.style.display = "none";
   savedUserTable.style.display = "revert";
+  const savedUsers = await getSavedUsers();
+  populateSavedUsersTable(savedUsers);
 });
 
-userListTag.addEventListener("click", () => {
+userListTag.addEventListener("click", async () => {
   usersTable.style.display = "revert";
   savedUserTable.style.display = "none";
+  const {users, orgName} = await listUsers();
+  const tableHeader = document.getElementById("table-header");
+  tableHeader.innerText = `User List For ${orgName}`;
+  if (users && users.length) {
+    await populateUsersTable(users, orgName);
+  }
 });
