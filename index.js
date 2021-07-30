@@ -223,7 +223,7 @@ userSavedListTag.addEventListener("click", async () => {
   savedUserTable.style.display = "revert";
   userSavedListTag.style.color = "black"
   userSavedListTag.style.fontWeight = "bold";
-  userListTag.style.color = "revert"
+  userListTag.style.color = "gray"
   userListTag.style.fontWeight = "revert";
 });
 
@@ -240,6 +240,6 @@ userListTag.addEventListener("click", async () => {
   savedUserTable.style.display = "none";
   userListTag.style.color = "black"
   userListTag.style.fontWeight = "bold";
-  userSavedListTag.style.color = "revert"
+  userSavedListTag.style.color = "gray"
   userSavedListTag.style.fontWeight = "revert";
 });

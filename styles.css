@@ -15,6 +15,7 @@ nav {
 
 .logo-search-wrapper {
   display: flex;
+  margin: 0 1rem;
 }
 .app-title {
   text-align: center;
@@ -28,7 +29,6 @@ nav {
 
 #search {
   margin-left: auto;
-  margin-right: 14px;
   padding: 0.5rem;
   width: 200px;
   align-self: center;
@@ -36,11 +36,13 @@ nav {
 
 .breadcrum-wrapper {
   display: flex;
+  margin: 1rem 1rem;
 }
 
 .breadcrum > a {
   color: gray;
   text-decoration: none;
+  font-size: 1.2rem;
 }
 
 .breadcrum > a:hover {
