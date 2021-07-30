@@ -19,6 +19,30 @@ const listUsers = async () => {
   };
 }
 
+const impersonate = async (user) => {
+  try {
+    const impersonateResponse = await fetch('http://localhost:3000/api/user/impersonate', {
+      method: 'POST',
+      credentials: 'include',
+      mode: 'cors',
+      headers: {
+        'content-type': 'application/json;charset=UTF-8'
+      },
+      body: JSON.stringify({
+        orgId: user.orgId,
+        userId: user.id
+      })
+    });
+    if (impersonateResponse.status !== 200) {
+      throw new Error('Non 200 response status');
+    }
+    await chrome.tabs.reload();
+  }
+  catch(err) {
+    console.log('Error impersonating user', user, err);
+  };
+}
+
 (async () => {
   const {users, orgName} = await listUsers();
   console.log('Users', users);
