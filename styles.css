@@ -22,6 +22,7 @@ nav {
 .logo-search-wrapper {
   display: flex;
   margin: 0 1rem;
+  align-items: center;
 }
 .app-title {
   text-align: center;
@@ -60,7 +61,11 @@ nav {
   margin-right: 8px;
   color: lightgray;
 }
-
+.logo {
+  height: 24px;
+  width: 24px;
+  margin-right: 9px;
+}
 .breadcrum:not(:first-of-type) {
   margin-left: 8px;
   color: lightgray;
