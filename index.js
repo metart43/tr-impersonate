@@ -14,13 +14,13 @@ let currentTable = 'SavedUsers';
  */
 const listUsers = async (search) => {
   try {
-    const usersResponse = await fetch('http://localhost:3000/api/users', {
+    const usersResponse = await fetch('http://app.triblio.com/api/users', {
       method: 'GET',
       credentials: 'include',
       mode: 'cors',
     });
     const users = await usersResponse.json();
-    const orgResponse = await fetch('http://localhost:3000/api/org/current', {
+    const orgResponse = await fetch('http://app.triblio.com/api/org/current', {
       method: 'GET',
       credentials: 'include',
       mode: 'cors',
@@ -40,9 +40,8 @@ const listUsers = async (search) => {
  */
 const impersonate = async (event) => {
   const user = event.target.data;
-  console.log(user);
   try {
-    const impersonateResponse = await fetch('http://localhost:3000/api/user/impersonate', {
+    const impersonateResponse = await fetch('http://app.triblio.com/api/user/impersonate', {
       method: 'POST',
       credentials: 'include',
       mode: 'cors',
@@ -126,7 +125,6 @@ const populateUsersTable = async (userArray, orgName) => {
     saveUserButton.addEventListener("click", async (event) => {
       await saveUser(event);
       let savedUsers = await getSavedUsers();
-      console.log('New saved users', savedUsers);
     });
     saveUserButton.innerText = "Save";
     userSaveCell.appendChild(saveUserButton);
