@@ -1,12 +1,12 @@
 {
   "name": "Triblio Impersonate",
   "description": "TBD!",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "manifest_version": 3,
   "background": {
     "service_worker": "background.js"
   },
-  "permissions": ["storage", "activeTab"],
+  "permissions": ["storage"],
   "action": {
     "default_popup": "index.html"
   }
