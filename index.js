@@ -14,13 +14,13 @@ let currentTable = 'SavedUsers';
  */
 const listUsers = async (search) => {
   try {
-    const usersResponse = await fetch('http://app.triblio.com/api/users', {
+    const usersResponse = await fetch('https://app.triblio.com/api/users', {
       method: 'GET',
       credentials: 'include',
       mode: 'cors',
     });
     const users = await usersResponse.json();
-    const orgResponse = await fetch('http://app.triblio.com/api/org/current', {
+    const orgResponse = await fetch('https://app.triblio.com/api/org/current', {
       method: 'GET',
       credentials: 'include',
       mode: 'cors',
@@ -41,7 +41,7 @@ const listUsers = async (search) => {
 const impersonate = async (event) => {
   const user = event.target.data;
   try {
-    const impersonateResponse = await fetch('http://app.triblio.com/api/user/impersonate', {
+    const impersonateResponse = await fetch('https://app.triblio.com/api/user/impersonate', {
       method: 'POST',
       credentials: 'include',
       mode: 'cors',
